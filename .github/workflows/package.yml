@@ -1,0 +1,52 @@
+name: Package Skill
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  package:
+    name: Publish skill release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Build archive
+        id: package
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          date_stamp="$(date -u +'%Y%m%d')"
+          short_sha="$(git rev-parse --short HEAD)"
+          archive_name="siant-company-skill-${date_stamp}-${short_sha}.zip"
+          git archive \
+            --format=zip \
+            --prefix='siant-company/' \
+            --output="${archive_name}" \
+            HEAD -- . ':(exclude).github'
+
+          echo "archive_name=${archive_name}" >> "${GITHUB_OUTPUT}"
+          echo "release_tag=siant-company-skill-${date_stamp}-${short_sha}" >> "${GITHUB_OUTPUT}"
+
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ steps.package.outputs.release_tag }}
+          ARCHIVE_NAME: ${{ steps.package.outputs.archive_name }}
+        shell: bash
+        run: |
+          if gh release view "${RELEASE_TAG}" >/dev/null 2>&1; then
+            gh release upload "${RELEASE_TAG}" "${ARCHIVE_NAME}" --clobber
+          else
+            gh release create "${RELEASE_TAG}" "${ARCHIVE_NAME}" \
+              --title "${RELEASE_TAG}" \
+              --generate-notes
+          fi
