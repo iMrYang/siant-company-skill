@@ -1,6 +1,6 @@
 ---
 name: siant-company
-description: 信安通综合管理平台（信安通 OA）的完整业务技能。用户提到 OA 登录、登录状态、当前用户或部门信息、日报，或提到新建流程、我的发起、我的待办、我的已办、消息通知、出差申请、外出申请、差旅费报销、公司用章、部门用章时必须使用；按需加载对应流程并执行真实查询，所有业务创建、编辑及其他变更都必须先打印完整待提交数据，并在用户针对该数据明确确认后才能提交。
+description: 信安通综合管理平台（信安通 OA）的完整业务技能。用户提到 OA 登录、登录状态、当前用户或部门信息、日报，或要求根据信安通/OA 中的本周日报生成周报、周总结、本周工作或下周计划，或提到新建流程、我的发起、我的待办、我的已办、消息通知、出差申请、外出申请、差旅费报销、公司用章、部门用章时必须使用；按需加载对应流程并执行真实查询，所有业务创建、编辑及其他变更都必须先打印完整待提交数据，并在用户针对该数据明确确认后才能提交。
 compatibility: 需要 HTTP 客户端；浏览器仅用于登录、接口发现、动态表单读取和已记录接口变更核验。会话只保存在当前用户目录的 ~/.siant/siant-oa.json。
 ---
 
@@ -13,7 +13,7 @@ compatibility: 需要 HTTP 客户端；浏览器仅用于登录、接口发现�
 | 用户意图 | 先读取 |
 | --- | --- |
 | 登录、会话、当前用户或部门 | [`auth.md`](auth.md) |
-| 查询、新增、补充、修改、删除日报 | [`IntegratedManagement/DailyReport.md`](IntegratedManagement/DailyReport.md) |
+| 查询、新增、补充、修改、删除日报，或根据本周日志生成周报总结 | [`IntegratedManagement/DailyReport.md`](IntegratedManagement/DailyReport.md) |
 | 我的待办、我的已办、签收、归还 | [`IntegratedManagement/Workbench.md`](IntegratedManagement/Workbench.md) |
 | 其他流程、消息通知、出差、外出、报销、公司/部门用章 | [`auth.md`](auth.md)，再通过浏览器只读发现该页面的真实接口和字段 |
 
